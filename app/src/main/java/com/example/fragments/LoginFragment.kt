@@ -4,16 +4,13 @@ package com.example.fragments
 
 import android.content.Intent
 import android.util.Log
-import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageButton
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.socialmedia.R
 
@@ -61,7 +58,7 @@ class LoginFragment : Fragment() {
         val btnG: ImageButton = view.findViewById(R.id.google)
         val btnGoogle: SignInButton = view.findViewById(R.id.google_button)
         val btnLogin: Button = view.findViewById(R.id.login)
-//        val btnRegister: Button = view.findViewById(R.id.register)
+        val btnRegister: TextView = view.findViewById(R.id.register)
         val txtEmail: EditText = view.findViewById(R.id.email)
         val txtPassword: EditText = view.findViewById(R.id.password)
         val gso =
@@ -111,23 +108,24 @@ class LoginFragment : Fragment() {
                 Log.d("TAG", "empty email or pass")
         }
 
-//        btnRegister.setOnClickListener {
-//            val email = txtEmail.text.toString()
-//            val password = txtPassword.text.toString()
-//            if (email.isNotEmpty() or password.isNotEmpty()) {
-//                FirebaseAuth.getInstance()
-//                    .createUserWithEmailAndPassword(email, password)
-//                    .addOnSuccessListener {
-//                        Log.d("TAG", "login unsuccessful")
-//                    }
-//                    .addOnFailureListener {
-//                        it.printStackTrace()
-//                    }
-//            } else
-//                Log.d("TAG", "empty email or pass")
-//
-//
-//        }
+        btnRegister.setOnClickListener {
+            val email = txtEmail.text.toString()
+            val password = txtPassword.text.toString()
+            if (email.isNotEmpty() or password.isNotEmpty()) {
+                FirebaseAuth.getInstance()
+                    .createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+                        Log.d("TAG", "login unsuccessful")
+                        Toast.makeText(getApplicationContext(),"Registered!", Toast.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener {
+                        it.printStackTrace()
+                    }
+            } else
+                Log.d("TAG", "empty email or pass")
+
+
+        }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
