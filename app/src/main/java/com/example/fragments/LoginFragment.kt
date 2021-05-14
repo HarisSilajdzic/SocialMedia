@@ -13,10 +13,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import com.example.socialmedia.R
 
 import com.facebook.FacebookSdk.getApplicationContext
+import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
@@ -54,6 +56,9 @@ class LoginFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val btnFb: ImageButton = view.findViewById(R.id.fb)
+        val btnFacebook: LoginButton = view.findViewById(R.id.facebook_button)
+        val btnG: ImageButton = view.findViewById(R.id.google)
         val btnGoogle: SignInButton = view.findViewById(R.id.google_button)
         val btnLogin: Button = view.findViewById(R.id.login)
 //        val btnRegister: Button = view.findViewById(R.id.register)
@@ -64,6 +69,12 @@ class LoginFragment : Fragment() {
                 .requestEmail()
                 .build()
 
+        btnFb.setOnClickListener {
+                btnFacebook.performClick()
+        }
+
+
+
         googleApiClient = context?.let {
             GoogleApiClient.Builder(it)
                 .enableAutoManage(it as FragmentActivity) {  }
@@ -71,8 +82,11 @@ class LoginFragment : Fragment() {
                 .build()
         }
 
-        btnGoogle.setOnClickListener {
+
+
+        btnG.setOnClickListener {
             val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
+            btnGoogle.performClick()
             startActivityForResult(intent, rcSignIN)
         }
 
@@ -123,5 +137,5 @@ class LoginFragment : Fragment() {
             handleSignInResult(result)
         }
     }
-//
+
 }
