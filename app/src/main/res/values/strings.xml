@@ -3,6 +3,7 @@
     <string name="fb_login_protocol_scheme">fb3895107677242990</string>
     <string name="storale_link">gs://social-media-app-id.appspot.com</string>
     <string name="facebook_app_id">3895107677242990</string>
+    <string name="web_client_id"> 454163188365-smnvjrfm4r0tg8nl4dpqb1uec5q4qgac.apps.googleusercontent.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sign_in">Sign In</string>
