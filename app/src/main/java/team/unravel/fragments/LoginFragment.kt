@@ -1,6 +1,4 @@
-@file:Suppress("DEPRECATION")
-
-package com.example.fragments
+package team.unravel.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.example.socialmedia.MainActivity
-import com.example.socialmedia.R
+import team.unravel.socialmedia.MainActivity
+import com.unravel.socialmedia.R
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -28,13 +26,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-@Suppress("DEPRECATION")
 class LoginFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private val callBackManager: CallbackManager = CallbackManager.Factory.create()
@@ -56,7 +52,7 @@ class LoginFragment : Fragment() {
 
     private fun gotoProfile() {
         val nextFrag = MainFragment()
-        activity!!.supportFragmentManager.beginTransaction()
+            requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.container, nextFrag, "mainFragment")
             .addToBackStack(null)
             .commit()
@@ -73,7 +69,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun updateUI(user: FirebaseUser?) {
+    private fun updateUI() {
 
     }
 
@@ -117,7 +113,7 @@ class LoginFragment : Fragment() {
         btnFacebook.setReadPermissions("email", "public_profile")
         btnFacebook.registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {
-                handleFacebookAccessToken(result!!.accessToken)
+                this@LoginFragment.handleFacebookAccessToken(result!!.accessToken)
             }
 
             override fun onCancel() {
@@ -210,9 +206,9 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    updateUI(user)
+                    updateUI()
                 } else {
-                    updateUI(null)
+                    updateUI()
                 }
             }
 
@@ -225,7 +221,7 @@ class LoginFragment : Fragment() {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d("TAG", "signInWithCredential:success")
                 val user = auth.currentUser
-                updateUI(user)
+                updateUI()
                 gotoProfile()
             } else {
                 // If sign in fails, display a message to the user.
@@ -234,7 +230,7 @@ class LoginFragment : Fragment() {
                     context, "Authentication failed.",
                     Toast.LENGTH_SHORT
                 ).show()
-                updateUI(null)
+                updateUI()
             }
         }
     }

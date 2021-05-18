@@ -1,11 +1,9 @@
-package com.example.socialmedia
+package team.unravel.socialmedia
 
-import android.app.ActionBar
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.fragments.LoginFragment
-import com.google.android.gms.auth.api.Auth
+import com.unravel.socialmedia.R
+import team.unravel.fragments.LoginFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +16,10 @@ class MainActivity : AppCompatActivity() {
         val actionBar: androidx.appcompat.app.ActionBar? = getSupportActionBar()
         actionBar!!.hide()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, LoginFragment())
+            .replace(
+                R.id.container,
+                LoginFragment()
+            )
             .commitAllowingStateLoss()
     }
 

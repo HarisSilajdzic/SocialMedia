@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package team.unravel.socialmedia
 
 import org.junit.Test
 

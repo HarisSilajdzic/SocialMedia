@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package team.unravel.socialmedia
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -42,6 +42,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454163188365:android:e93f33c354bf00ab4d30c4",
+        "android_client_info": {
+          "package_name": "team.unravel.socialmedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454163188365-9i4hprhc5ah15pisvm5uaef318hilor1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "team.unravel.socialmedia",
+            "certificate_hash": "c2951e685a36104bdfe442886bd42e8525ff2109"
+          }
+        },
+        {
+          "client_id": "454163188365-smnvjrfm4r0tg8nl4dpqb1uec5q4qgac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBex-QWSM6wjDlFzDlm-uK86pax7BqYok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "454163188365-smnvjrfm4r0tg8nl4dpqb1uec5q4qgac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
