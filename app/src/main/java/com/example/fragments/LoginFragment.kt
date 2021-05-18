@@ -2,19 +2,14 @@
 
 package com.example.fragments
 
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.example.socialmedia.MainActivity
 import com.example.socialmedia.R
 import com.facebook.AccessToken
@@ -22,7 +17,6 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.FacebookSdk.getApplicationContext
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.Auth
@@ -38,8 +32,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.security.MessageDigest
-import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -58,12 +50,16 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false)
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
 
     private fun gotoProfile() {
-//        startActivity(Intent(applicationContext, FeedActivity::class.java))
+        val nextFrag = MainFragment()
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.container, nextFrag, "mainFragment")
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun handleSignInResult(result: GoogleSignInResult?) {
@@ -182,6 +178,7 @@ class LoginFragment : Fragment() {
                         Log.d("TAG", "login unsuccessful")
                         Toast.makeText(getApplicationContext(), "Registered!", Toast.LENGTH_LONG)
                             .show()
+                        gotoProfile()
                     }
                     .addOnFailureListener {
                         it.printStackTrace()
@@ -214,8 +211,7 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     updateUI(user)
-                }
-                else {
+                } else {
                     updateUI(null)
                 }
             }
