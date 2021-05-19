@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#01807C"
-    tools:context="team.unravel.fragments.LoginFragment">
+    tools:context="team.unravel.fragments.LoginFragment"
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView"
@@ -287,6 +288,7 @@
             app:layout_constraintStart_toEndOf="@id/textView6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     <item android:id="@+id/create_post"
         android:title="Create post"
         android:icon="@drawable/ic_baseline_add_24" />
-    <item android:id="@+id/More"
+    <item android:id="@+id/more"
         android:title="More"
         android:icon="@drawable/ic_baseline_settings_24" />
 </menu>

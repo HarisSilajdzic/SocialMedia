@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:454163188365:android:14718f448bc017aa4d30c4",
         "android_client_info": {
-          "package_name": "com.example.socialmedia"
+          "package_name": "team.unravel.socialmedia"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "454163188365-1ppqopdmdeadb7c9mbkdgh7tej4e0urh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.socialmedia",
+            "package_name": "team.unravel.socialmedia",
             "certificate_hash": "c2951e685a36104bdfe442886bd42e8525ff2109"
           }
         },

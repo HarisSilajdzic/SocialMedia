@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.socialmedia"
+        applicationId "team.unravel.socialmedia"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -34,7 +35,7 @@ android {
 }
 
 dependencies {
-
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.2'

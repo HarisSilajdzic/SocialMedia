@@ -3,13 +3,10 @@ package team.unravel.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import team.unravel.socialmedia.MainActivity
-import com.unravel.socialmedia.R
+import androidx.navigation.fragment.findNavController
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -29,33 +26,24 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.unravel.socialmedia.R
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(R.layout.fragment_login) {
+
     private lateinit var auth: FirebaseAuth
     private val callBackManager: CallbackManager = CallbackManager.Factory.create()
     private val rcSignIN = 1
     private var googleApiClient: GoogleApiClient? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false)
-    }
-
-
     private fun gotoProfile() {
-        val nextFrag = MainFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.container, nextFrag, "mainFragment")
-            .addToBackStack(null)
-            .commit()
+        findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
+//        activity?.let { Navigation.findNavController(it, R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_mainFragment) }
     }
 
     private fun handleSignInResult(result: GoogleSignInResult?) {
@@ -127,7 +115,6 @@ class LoginFragment : Fragment() {
 
         googleApiClient = context?.let {
             GoogleApiClient.Builder(it)
-                .enableAutoManage(it as MainActivity) { }
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
         }
@@ -186,14 +173,18 @@ class LoginFragment : Fragment() {
         }
     }
 
+//    override fun onPause() {
+//        super.onPause()
+//        activity?.let { googleApiClient?.stopAutoManage(it) }
+//        googleApiClient?.disconnect()
+//    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
         if (requestCode == rcSignIN) {
-            val result =
-                Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            val account = task.getResult(ApiException::class.java)!!
-            authUser(account.idToken!!)
+            val result =  Auth.GoogleSignInApi.getSignInResultFromIntent(data)
+            val account = task.getResult(ApiException::class.java)
+            account?.idToken?.let { authUser(it) }
             handleSignInResult(result)
         }
 
@@ -214,8 +205,8 @@ class LoginFragment : Fragment() {
 
     }
 
-    private fun handleFacebookAccessToken(token: AccessToken?) {
-        val credential = FacebookAuthProvider.getCredential(token!!.token)
+    private fun handleFacebookAccessToken(token: AccessToken) {
+        val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
@@ -234,5 +225,6 @@ class LoginFragment : Fragment() {
             }
         }
     }
+
 
 }
