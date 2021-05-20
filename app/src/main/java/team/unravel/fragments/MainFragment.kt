@@ -30,14 +30,10 @@ class MainFragment : Fragment(){
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        NavigationUI.setupWithNavController(menu_items, findNavController())
         val navHostFragment = childFragmentManager.findFragmentById(R.id.my_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.menu_items)
         bottomNavigationView.setupWithNavController(navController)
-//        bottomNavigationView.setupWithNavController(navController)
-//        NavigationUI.onNavDestinationSelected(R.menu.home, navController)
-//        NavigationUI.setupWithNavController(menu_items, findNavController())
     }
 
 
