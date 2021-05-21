@@ -38,9 +38,7 @@ class MainFragment : Fragment(){
         fab.setOnClickListener {
             navController.navigate(R.id.createPostFragment)
         }
-
         bottomNavigationView.setupWithNavController(navController)
-
     }
 
 
