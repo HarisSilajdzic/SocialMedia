@@ -1,4 +1,4 @@
-package team.unravel.fragments
+package team.unravel.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.unravel.socialmedia.R
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -32,8 +33,14 @@ class MainFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         val navHostFragment = childFragmentManager.findFragmentById(R.id.my_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.menu_items)
+        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
+        bottomNavigationView.background = null
+        fab.setOnClickListener {
+            navController.navigate(R.id.createPostFragment)
+        }
+
         bottomNavigationView.setupWithNavController(navController)
+
     }
 
 

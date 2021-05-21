@@ -1,14 +1,65 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="team.unravel.fragments.CreatePostFragment">
 
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/postFields"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Create post fragment"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="460dp"
+            android:layout_height="300dp"
+            android:src="@drawable/upload_image" />
+
+        <!--            <EditText-->
+        <!--                android:id="@+id/postTitle"-->
+        <!--                android:layout_below="@id/uploadImage"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:textSize="30sp"-->
+        <!--                android:layout_marginLeft="5dp"-->
+        <!--                android:layout_marginRight="5dp"-->
+        <!--                android:paddingLeft="10dp"-->
+        <!--                android:layout_height="40dp"-->
+        <!--                android:hint="Title"-->
+        <!--                android:background="@drawable/text_view_back"/>-->
+
+        <EditText
+            android:id="@+id/textContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/uploadImage"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:autoLink="all"
+            android:background="@drawable/text_view_back"
+            android:gravity="left"
+            android:hint="What is on your mind?"
+            android:inputType="textMultiLine"
+            android:maxLength="2000"
+            android:maxLines="8"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/uploadPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/postFields"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:text="POST" />
+
+</RelativeLayout>

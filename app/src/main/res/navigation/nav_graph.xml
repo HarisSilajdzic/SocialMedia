@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="team.unravel.fragments.MainFragment"
+        android:name="team.unravel.main.MainFragment"
         android:label="MainFragment">
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="team.unravel.fragments.LoginFragment"
+        android:name="team.unravel.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action

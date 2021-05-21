@@ -1,4 +1,4 @@
-package team.unravel.fragments
+package team.unravel.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +20,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApi
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -98,7 +99,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             btnFacebook.fragment = this
             btnFacebook.performClick()
         }
-        btnFacebook.setReadPermissions("email", "public_profile")
+        btnFacebook.setPermissions("email", "public_profile")
         btnFacebook.registerCallback(callBackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {
                 this@LoginFragment.handleFacebookAccessToken(result!!.accessToken)
@@ -134,6 +135,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     .signInWithEmailAndPassword(email, password)
                     .addOnSuccessListener {
                         Log.d("TAG", "login successful")
+
                         Toast.makeText(
                             getApplicationContext(),
                             "Login successful!",
@@ -144,7 +146,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         it.printStackTrace()
                     }
                     .addOnCompleteListener {
-
+                        gotoProfile()
 //                        startActivity(Intent(applicationContext, FeedActivity::class.java))
                     }
             } else
@@ -196,7 +198,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
+//                    val user = auth.currentUser
                     updateUI()
                 } else {
                     updateUI()
@@ -211,7 +213,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.d("TAG", "signInWithCredential:success")
-                val user = auth.currentUser
+//                val user = auth.currentUser
                 updateUI()
                 gotoProfile()
             } else {
