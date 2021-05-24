@@ -94,7 +94,7 @@ class CreatePostFragment : Fragment() {
                     userText = textContent.text.toString()
                         imageUri = data.data!!
                         uploadImageToFB()
-
+//comment
                     Log.d("TAG", "uploadPostClicked: $uploadImage ")
                 }
             }
