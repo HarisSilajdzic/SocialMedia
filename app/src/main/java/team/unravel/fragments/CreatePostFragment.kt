@@ -36,8 +36,6 @@ class CreatePostFragment : Fragment() {
     lateinit var imageUri: Uri
     lateinit var userText: String
 
-    //    val storage = Firebase.storage("gs://social-media-app-id.appspot.com/uploads")
-//    val storageRef = storage.rbeference
     private lateinit var database: DatabaseReference
 
 
@@ -66,6 +64,12 @@ class CreatePostFragment : Fragment() {
             )
             startActivityForResult(pickPhoto, 1000)
         }
+        uploadPost.setOnClickListener {
+            userText = textContent.text.toString()
+            imageUri = Uri.parse("nothing")
+            uploadPostToFB()
+            Log.d("TAG", "uploadPostClicked: $uploadImage ")
+        }
 
     }
 
@@ -92,9 +96,8 @@ class CreatePostFragment : Fragment() {
             if (uploadImage.drawable != null || textContent.text.toString().isNotEmpty()) {
                 uploadPost.setOnClickListener {
                     userText = textContent.text.toString()
-                        imageUri = data.data!!
-                        uploadImageToFB()
-//comment
+                    imageUri = data.data!!
+                    uploadImageToFB()
                     Log.d("TAG", "uploadPostClicked: $uploadImage ")
                 }
             }
