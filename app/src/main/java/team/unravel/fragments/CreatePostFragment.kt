@@ -8,16 +8,19 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -28,34 +31,24 @@ import com.unravel.socialmedia.R
 import kotlinx.android.synthetic.main.fragment_create_post.*
 import team.unravel.model.UserModel
 import java.util.*
+import kotlin.properties.Delegates
 
 
-class CreatePostFragment : Fragment() {
+class CreatePostFragment : Fragment(R.layout.fragment_create_post) {
+    private lateinit var mAuth: FirebaseAuth
     var storage: FirebaseStorage? = null
-    var storageReference: StorageReference? = null
+    var maxId: Long = 0
+    private var storageReference: StorageReference? = null
     lateinit var imageUri: Uri
+    var imageUrl: String? = null
     lateinit var userText: String
 
-    private lateinit var database: DatabaseReference
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-
-        return inflater.inflate(R.layout.fragment_create_post, container, false)
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         storage = FirebaseStorage.getInstance()
         storageReference = storage?.reference
-
+        imageUrl = storageReference?.child("posts")?.child("imageRef")!!.name
         val imageView = view.findViewById<ImageView>(R.id.uploadImage)
         imageView.setOnClickListener {
             val pickPhoto = Intent(
@@ -74,10 +67,25 @@ class CreatePostFragment : Fragment() {
     }
 
     private fun uploadPostToFB() {
+        var id: Int
+        val databaseRef = FirebaseDatabase.getInstance().reference
+        val query = databaseRef.child("Member")
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+            }
 
-        val userModel = UserModel("2", "fark", imageUri.toString(), userText)
-        Firebase.database.reference.child("users").push().setValue(userModel)
-        findNavController().navigate(R.id.homeFragment)
+            override fun onDataChange(snapshot: DataSnapshot) {
+                mAuth = FirebaseAuth.getInstance()
+                val currentUser: FirebaseUser = mAuth.currentUser!!
+                maxId = snapshot.childrenCount
+                val userModel = UserModel(0, currentUser.displayName!!, imageUrl!!, userText)
+                Firebase.database.reference.child("Member").child((maxId + 1).toString()).setValue(userModel)
+                findNavController().navigate(R.id.homeFragment)
+            }
+
+        })
+
+
     }
 
 
@@ -112,12 +120,13 @@ class CreatePostFragment : Fragment() {
             "images/"
                     + UUID.randomUUID().toString()
         )
-        imageUri?.let {
+        imageUri.let {
             ref?.putFile(it)
                 ?.addOnSuccessListener(object : OnSuccessListener<UploadTask.TaskSnapshot> {
                     override fun onSuccess(taskSnapshot: UploadTask.TaskSnapshot) {
                         Toast.makeText(requireContext(), "Upload Successful", Toast.LENGTH_SHORT)
                             .show()
+                        imageUrl = ref.name
                         progressDialog.dismiss()
                         uploadPostToFB()
                     }
@@ -134,14 +143,14 @@ class CreatePostFragment : Fragment() {
                         val progress: Double = (100.0
                                 * taskSnapshot.bytesTransferred
                                 / taskSnapshot.totalByteCount)
-                        progressDialog.setMessage(
-                            "Uploaded "
-                                    + progress.toInt() + "%"
-                        )
+                        progressDialog.setMessage("Uploaded " + progress.toInt() + "%")
+
                     }
 
                 })
         }
 
     }
+
+
 }
